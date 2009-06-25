@@ -65,6 +65,26 @@ CONTENT
     end
   end
 
+  context "test stylesheet_link" do
+    setup do
+      content = <<CONTENT
+---
+title: test stylesheet link
+---
+
+{% stylesheet "/path/to/some/css.file" %}
+
+CONTENT
+      create_post(content)
+    end
+
+    should "have stylesheet link with time based querystring" do
+      assert_match %r{stylesheet}, @result
+      assert_match %r{href=}, @result
+      assert_match %r{\?\d+}, @result
+    end
+  end
+
   context "simple post with markdown and pre tags" do
     setup do
       @content = <<CONTENT
